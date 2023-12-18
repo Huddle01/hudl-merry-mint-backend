@@ -3,7 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
 
 // TODO: paginate!
-const getList = async (token: string, page: number, setList) => {
+const getList = async (
+  token: string,
+  page: number,
+  setList: (keys: any[]) => void
+) => {
   const service = new LocksmithService();
   const { data: keys } = await service.keys(
     137,
@@ -22,8 +26,8 @@ const getList = async (token: string, page: number, setList) => {
   setList(keys);
 };
 
-export const List = ({ token }) => {
-  const [list, setList] = useState([]);
+export const List = ({ token }: { token: string }) => {
+  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
     getList(token, 0, setList);
@@ -49,7 +53,7 @@ export const List = ({ token }) => {
   );
 };
 
-export const Row = ({ item, token }) => {
+export const Row = ({ item, token }: { item: any; token: string }) => {
   return (
     <tr>
       <td>{item.token}</td>
@@ -61,7 +65,15 @@ export const Row = ({ item, token }) => {
   );
 };
 
-export const Cell = ({ item, attribute, token }) => {
+export const Cell = ({
+  item,
+  attribute,
+  token,
+}: {
+  attribute: number;
+  item: any;
+  token: string;
+}) => {
   const [value, setValue] = useState(item[`hudl_${attribute}`]);
   const toggle = useCallback(() => {
     const service = new LocksmithService();
