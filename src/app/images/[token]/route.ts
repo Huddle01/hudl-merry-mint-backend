@@ -19,15 +19,13 @@ export async function GET(
     });
   });
   return new NextResponse(
-    `<svg height="100" width="100">
+    `<svg height="100" width="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     ${Object.keys(metadata.userMetadata?.public)
       .map((key) => {
         return `<text x="0" y="15" fill="red">${key}</text>`;
       })
       .join(`\n`)}
-
-</svg> 
- `,
+</svg> `,
     {
       status: 200,
       headers: {
