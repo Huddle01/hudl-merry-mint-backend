@@ -18,11 +18,21 @@ export async function GET(
       value: metadata.userMetadata?.public[key],
     });
   });
+  const size = 300;
   return new NextResponse(
-    `<svg height="100" width="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    ${Object.keys(metadata.userMetadata?.public)
-      .map((key) => {
-        return `<text x="0" y="15" fill="red">${key}</text>`;
+    `<svg height="${size}" width="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    ${new Array(9)
+      .fill(0)
+      .map((x, i) => {
+        if (metadata.userMetadata?.public[`hudl_${i}`]) {
+          return `<text y="${size / 6 + (size / 3) * Math.floor(i / 3)}" x="${
+            size / 6 + (size / 3) * (i % 3)
+          }" fill="green">${i}</text>`;
+        } else {
+          return `<text y="${size / 6 + (size / 3) * Math.floor(i / 3)}" x="${
+            size / 6 + (size / 3) * (i % 3)
+          }" fill="red">${i}</text>`;
+        }
       })
       .join(`\n`)}
 </svg> `,
