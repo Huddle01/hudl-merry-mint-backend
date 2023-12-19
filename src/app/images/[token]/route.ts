@@ -18,11 +18,21 @@ export async function GET(
       value: metadata.userMetadata?.public[key],
     });
   });
-  return NextResponse.json({
-    name: metadata.name,
-    description: metadata.description,
-    image: `${config.siteUrl}/images/${params.token}`,
-    attributes,
-    external_url: config.siteUrl,
-  });
+  return new NextResponse(
+    `<svg height="100" width="100">
+    ${Object.keys(metadata.userMetadata?.public)
+      .map((key) => {
+        return `<text x="0" y="15" fill="red">${key}</text>`;
+      })
+      .join(`\n`)}
+
+</svg> 
+ `,
+    {
+      status: 200,
+      headers: {
+        "content-type": "image/svg+xml",
+      },
+    }
+  );
 }
