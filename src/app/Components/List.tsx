@@ -1,6 +1,6 @@
+import { config } from "@/config";
 import { LocksmithService } from "@unlock-protocol/unlock-js";
 import { useCallback, useEffect, useState } from "react";
-import { useAccount, useConnect } from "wagmi";
 
 // TODO: paginate!
 const getList = async (
@@ -11,11 +11,11 @@ const getList = async (
   const service = new LocksmithService();
   const { data: keys } = await service.keys(
     137,
-    "0xbcc2533501bef44c2c050df0419c85ce30f928cb",
+    config.lock,
     "",
     "owner",
     undefined,
-    0,
+    page, // start page (yuou need to increase this)
     30,
     {
       headers: {
@@ -78,8 +78,8 @@ export const Cell = ({
   const toggle = useCallback(() => {
     const service = new LocksmithService();
     service.updateUserMetadata(
-      137,
-      "0xbcc2533501bef44c2c050df0419c85ce30f928cb",
+      config.network,
+      config.lock,
       item.keyholderAddress,
       {
         metadata: {

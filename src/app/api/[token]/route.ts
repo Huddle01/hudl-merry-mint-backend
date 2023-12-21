@@ -8,7 +8,7 @@ export async function GET(
 ) {
   // Get the
   const response = await fetch(
-    `https://locksmith.unlock-protocol.com/v2/api/metadata/137/locks/0xbcc2533501bef44c2c050df0419c85ce30f928cb/keys/${params.token}`
+    `https://locksmith.unlock-protocol.com/v2/api/metadata/${config.network}/locks/${config.lock}/keys/${params.token}`
   );
   const metadata = await response.json();
   const attributes: any[] = [];
