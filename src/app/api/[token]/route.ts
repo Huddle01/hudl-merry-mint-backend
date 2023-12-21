@@ -12,12 +12,14 @@ export async function GET(
   );
   const metadata = await response.json();
   const attributes: any[] = [];
-  Object.keys(metadata.userMetadata?.public).forEach((key) => {
-    attributes.push({
-      trait_type: key,
-      value: metadata.userMetadata?.public[key],
+  if (metadata.userMetadata?.public) {
+    Object.keys(metadata.userMetadata?.public).forEach((key) => {
+      attributes.push({
+        trait_type: key,
+        value: metadata.userMetadata?.public[key],
+      });
     });
-  });
+  }
   return NextResponse.json({
     name: metadata.name,
     description: metadata.description,
